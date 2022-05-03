@@ -1,0 +1,113 @@
+**In this project I pulled info from a database named chinook that contained data from a digital media store. The 11 tables in the database includes data on albums, 
+customers, employees, and invoices. See the questions I asked and the SQL I used to answer the questions raised below.**
+
+#1
+**How many distinct customers are from France? Answer: 5**
+SELECT 
+    DISTINCT COUNT (*) 
+FROM 
+    chinook.customers
+WHERE 
+    country = 'France';
+
+#2
+**Select all customers who are not from the USA (include their full name, customer id, and country), ordered by last name.**
+SELECT 
+    customerid, 
+    lastname, 
+    firstname, 
+    country
+FROM 
+    chinook.customers
+WHERE 
+    country <> 'USA'
+ORDER BY 
+    lastname;
+
+#3
+**What were the total sales from 2009? Answer: $449.46**
+SELECT 
+    SUM(total) AS 'Total Revenue (2009)'
+FROM 
+    chinook.invoices
+WHERE 
+    invoicedate LIKE '%2009%';
+
+#4
+**Display artist name, song names, album name, genre, and length of song in minutes for Audioslave.**
+SELECT 
+    artists.name AS 'Artist', 
+    tracks.Name AS 'Song Name', 
+    albums.Title AS 'Album Name', 
+    genres.name AS 'Genre', 
+    (tracks.Milliseconds/60000) AS 'Length (minutes)' 
+FROM 
+    tracks
+JOIN genres
+ON tracks.GenreId = genres.GenreId
+JOIN albums
+ON tracks.AlbumId = albums.AlbumId
+JOIN artists
+ON albums.ArtistId = artists.ArtistId
+WHERE 
+    artists.Name = 'Audioslave';
+
+#5
+**Display all info for all employees who are Sales Support Agents.**
+SELECT *
+FROM 
+    chinook.employees
+WHERE 
+    title LIKE '%Sales Support%';
+
+#6
+**Display total sales made by each sales agent, order by most to least.**
+SELECT 
+    employees.LastName, 
+    employees.FirstName, 
+    SUM(invoices.Total) AS 'Total Sales' 
+FROM 
+    invoices
+JOIN customers
+ON invoices.CustomerId = customers.CustomerId
+JOIN employees
+ON employees.EmployeeId = customers.SupportRepId
+GROUP BY 
+    employees.LastName
+ORDER BY 
+    invoices.Total DESC;
+
+#7
+**Which Sales Support Agent made the most sales in 2011?**
+SELECT 
+    employees.LastName, 
+    employees.FirstName, 
+    SUM(invoices.Total) AS 'Total Sales (2011)' 
+FROM 
+    invoices
+JOIN customers
+ON invoices.CustomerId = customers.CustomerId
+JOIN employees
+ON employees.EmployeeId = customers.SupportRepId
+WHERE 
+    invoices.InvoiceDate LIKE '%2011%'
+GROUP BY 
+    employees.LastName
+ORDER BY 
+    invoices.Total ASC;
+
+#8
+**Display all invoices for customer from the USA. Incluce customer full name, invoice ID, date of invoice, total spent per invoice, and billing country.**
+SELECT 
+    invoices.InvoiceId, 
+    invoices.InvoiceDate, 
+    customers.LastName, 
+    customers.FirstName, 
+    invoices.Total, 
+    invoices.BillingCountry
+FROM 
+    invoices
+JOIN customers
+ON invoices.CustomerId = customers.CustomerId
+WHERE 
+    invoices.BillingCountry = 'USA';
