@@ -1,0 +1,25 @@
+CREATE TABLE bookstore (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, format TEXT, pages INTEGER);
+
+INSERT INTO bookstore VALUES (1,"Get a Life, Chloe Brown", 15, "ebook", 200);
+INSERT INTO bookstore VALUES (2, "Act Your Age, Eve Brown", 15, "ebook", 210);
+INSERT INTO bookstore VALUES (3, "Take a Hint, Dani Brown", 15, "ebook", 200);
+INSERT INTO bookstore VALUES (4, "That Time I Got Drunk and Saved a Demon", 10, "ebook", 300);
+INSERT INTO bookstore VALUES (5, "MorningGlory Milking Farm", 11, "ebook", 180);
+INSERT INTO bookstore VALUES (6, "The Adventure Zone: Here There Be Gerblins", 7, "print", 238);
+INSERT INTO bookstore VALUES (7, "House of Daemon", 8, "ebook", 250);
+INSERT INTO bookstore VALUES (8, "Girls Weekend", 15, "ebook", 105);
+INSERT INTO bookstore VALUES (9, "HeartStopper", 10, "ebook", 190);
+INSERT INTO bookstore VALUES (10, "Orc-ward Encounters", 7, "ebook", 220);
+INSERT INTO bookstore VALUES (11, "Casual Cryptids: East Coast", 12, "ebook", 300);
+INSERT INTO bookstore VALUES (12, "Mistlefoe", 5, "ebook", 189);
+INSERT INTO bookstore VALUES (13, "Ice Planet Barbarians", 9, "ebook", 330);
+INSERT INTO bookstore VALUES (14, "Taken By The Alien Next Door", 10, "ebook", 201);
+INSERT INTO bookstore VALUES (15, "Squad", 15, "print", 150);
+
+SELECT * FROM bookstore ORDER BY price DESC;
+
+SELECT MAX(pages)
+    FROM bookstore;
+    
+SELECT AVG(price)
+    FROM bookstore;
