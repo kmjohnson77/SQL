@@ -2,7 +2,7 @@
 used for both halves of this course can be found in the Related To Course section under "Exercise Files".**
 
 #1 
-**Obtain a list of customers, including their full name and e-mail address, for company's 5 year anniversary. Order by customer last name.**
+**Obtain a list of customers, including their full name and e-mail address, for restaurant's 5 year anniversary. Order by customer last name.**
 SELECT 
     LastName, FirstName, Email
 FROM 
