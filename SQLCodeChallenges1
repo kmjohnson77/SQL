@@ -1,5 +1,5 @@
-**Here is the SQL I used to answer the questions posed in the LinkedIn Learning course titled "SQL Code Challenges" by Scott Simpson. The database for both halves of this 
-course can be found in the Related To Course section under "Exercise Files".**
+**Here is Part 1 of the SQL I used to answer the questions/scenarios posed in the LinkedIn Learning course titled "SQL Code Challenges" by Scott Simpson. The database 
+used for both halves of this course can be found in the Related To Course section under "Exercise Files".**
 
 #1 
 **Obtain a list of customers, including their full name and e-mail address, for company's 5 year anniversary. Order by customer last name.**
@@ -10,10 +10,12 @@ FROM
 ORDER BY 
     LastName;
 
+
 #2
 **Create a table that holds customer's ID and how many will be atending the 5 year anniversary event.**
 CREATE TABLE Attending_Customers
 ("CustomerID" INTEGER, "PartySize" INTEGER);
+
 
 #3 
 **Sort dishes by price from budget friendly to expensive.**
@@ -22,6 +24,7 @@ FROM
   Dishes
 ORDER BY 
   Price;
+
 
 #4
 **Output two different menus, 1: Appetizers and beverages, 2: All the items besides beverages, sort both tables by type of dish.**
@@ -43,6 +46,7 @@ WHERE
 ORDER BY 
     Type;
 
+
 #5
 **Add information from loyalty program sign up card, to customer's table.**
 INSERT INTO customers 
@@ -56,6 +60,7 @@ VALUES
     "Los Angeles", "CA", 
     "323-656-0987", "1994-06-06");
 
+
 #6 
 **Update Customers table with customer's new mailing address.**
 UPDATE Customers 
@@ -65,6 +70,7 @@ SET
     State = "NY"
 WHERE 
     CustomerID = "26";
+
 
 #7 
 **Delete customer "Taylor Jenkins from FL" from restaurant's e-mail list. Confirm the correct customer was deleted.**
@@ -106,103 +112,175 @@ INSERT INTO Attending_Customers
 VALUES 
     ((SELECT CustomerID FROM Customers WHERE Email ="atapley2j@kinetecoinc.com"), "4");
 
---Look up a customer's reservation on June 14th 2020, party size of 4, Last Name sounds like "Stevenson", without knowing the exact spelling of their last name. Will need to JOIN 2 tables to get desired results.
---SELECT * FROM 
---Reservations;
 
---SELECT * FROM
---Customers;
+#9 
+**Look up a customer's reservation on June 14th 2020, party size of 4, Last Name sounds like "Stevenson", without knowing the exact spelling of their last name. 
+Will need to JOIN 2 tables to get desired results.**
+SELECT * 
+FROM 
+    Reservations;
 
---Joined the Customers and Reservations table, displayed the full name, party size and reservation date. Used the LIKE operator to get similar matches that start with "Ste". 
---Customer name: Paco Stephenson
+SELECT * 
+FROM
+    Customers;
 
---SELECT Customers.LastName, Customers.FirstName, Reservations.PartySize, Reservations.Date
---FROM Customers
---JOIN Reservations 
---ON Customers.CustomerID = Reservations.CustomerID
---WHERE Customers.LastName LIKE "Ste%"
---ORDER BY Date DESC;
+**Here I joined the Customers and Reservations table, displayed the full name, party size and reservation date. Used the LIKE operator to get similar matches that 
+start with "Ste". Answer - Customer name: Paco Stephenson**
 
---Create a reservation (Sam McAdams, July 14th 2020, 6 PM, 5 people) using the provided customer information (Email - smac@rouxacademy.com, 555-555-1212). First, check if the customer is already in our database. We need to enter a Customer ID, party size and date in the reservations table.
-
---SELECT * FROM Customers
---WHERE Email = "smac@kinetecoinc.com";
-
---Customer is not in our database, so we need to add them to our Customers table first.
-
---INSERT INTO Customers (FirstName, LastName, Email, Phone)
---VALUES ("Sam", "McAdams", "smac@rouxacademy.com", "555-555-1212");
-
---SELECT * FROM Customers
---WHERE LastName = "McAdams";
-
---Now we can add their reservation into our reservation table.
---INSERT INTO Reservations (CustomerID, Date, PartySize)
---VALUES ("102", "2020-07-14 18:00:00", "5");
-
---Create an order, find the customer, create the order record, add items to the order, find the total cost of the order.
-
---Here, I am trying to see if this customer already exists in our database. She does exist and her CustomerID = 70.
---SELECT * 
---FROM Customers
---WHERE FirstName = "Loretta";
-
---Here I am inserting the given information from the customer's order into the Orders table. OrderID = 1001.
---INSERT INTO Orders (OrderID, CustomerID, OrderDate)
---VALUES ("1001", "70", "2022-05-15 13:00:00");
-
---SELECT * 
---FROM Orders
---ORDER BY OrderDate DESC;
-
---Here I am finding the dish IDs for each dish she ordered. House salad = 7, Mini Cheeseburgers = 4. Smoothie = 20.
---SELECT * FROM Dishes
---WHERE Name = "House Salad" OR Name = "Mini Cheeseburgers" OR Name = "Tropical Blue Smoothie";
-
---Here I am creating the order in OrdersDishes by inserting OrderID, DishIDs, and OrderDishesID (start @ 4022) for each item.
---INSERT INTO OrdersDishes (OrdersDishesID, OrderID, DishID) 
---VALUES ("4022", "1001", "7");
---INSERT INTO OrdersDishes (OrdersDishesID, OrderID, DishID) 
---VALUES ("4023", "1001", "4");
---INSERT INTO OrdersDishes (OrdersDishesID, OrderID, DishID) 
---VALUES ("4024", "1001", "20");
-
---SELECT * FROM 
---OrdersDishes
---ORDER BY OrdersDishesID DESC;
+SELECT 
+    Customers.LastName, 
+    Customers.FirstName, 
+    Reservations.PartySize, 
+    Reservations.Date
+FROM 
+    Customers
+JOIN 
+    Reservations 
+ON 
+    Customers.CustomerID = Reservations.CustomerID
+WHERE 
+    Customers.LastName LIKE "Ste%"
+ORDER BY 
+    Date DESC;
 
 
---Here I am pulling the customer's delivery order information from 5/15/2022 using four different tables and adding all her items together for a total cost. Answer = $21.00.
+#10 
+**Create a reservation (Sam McAdams, July 14th 2020, 6 PM, 5 people) using the provided customer information (Email - smac@rouxacademy.com, 555-555-1212). 
+First, check if the customer is already in our database. We need to enter a Customer ID, party size and date in the reservations table.**
 
---SELECT Customers.FirstName, Customers.LastName, Orders.OrderDate, OrdersDishes.OrderID, SUM(Dishes.Price) AS "Total Price"
---FROM Customers 
---JOIN Orders ON Customers.CustomerID = Orders.CustomerID
---JOIN OrdersDishes ON OrdersDIshes.OrderID = Orders.OrderID
---JOIN Dishes ON Dishes.DishID = OrdersDishes.DishID
---WHERE FirstName = "Loretta" and OrderDate LIKE "2022%";
+SELECT * 
+FROM 
+    Customers
+WHERE 
+    Email = "smac@kinetecoinc.com";
 
---Set customer Cleo Goldwater's favorite dish to Quinoa Salmon Salad.
+**I found out the customer is not in our database, so I need to add them to our Customers table first.**
 
---Here I am looking for Cleo's unique CustomerID.
---SELECT CustomerID from Customers WHERE FirstName= "Cleo" AND LastName = "Goldwater"'
+INSERT INTO Customers 
+    (FirstName, LastName, Email, Phone)
+VALUES 
+    ("Sam", "McAdams", "smac@rouxacademy.com", "555-555-1212");
 
---Now I am updating the customer's favorite dish to Quinoa Salmon Salad using only her unique CustomerID and a subquery within the UPDATE query.
---UPDATE Customers SET FavoriteDish = (SELECT DishID FROM Dishes WHERE Name = "Quinoa Salmon Salad")
---WHERE CustomerID = "42";
+**Now I can add their reservation into the Reservations table.**
+INSERT INTO Reservations 
+    (CustomerID, Date, PartySize)
+VALUES 
+    ("102", "2020-07-14 18:00:00", "5");
 
---Now I am checking my work by joining the Dishes and Customer tables to see Cleo Goldwater's new favorite dish.
---SELECT Customers.FirstName, Customers.LastName, Dishes.Name, Customers.FavoriteDish
---FROM  Customers
---JOIN Dishes 
---ON Customers.FavoriteDish = Dishes.DishID
---ORDER BY Customers.FirstName;
 
---Generate a list of the five customers who have placd the most to-go orders. Include number of orders made, full name, e-mail, sort it by number of orders (most to least). Top 5: Blythe,
---Luciano, Yves, Norby and Oralla.
-SELECT COUNT(Orders.OrderID) AS Total_Orders, Customers.FirstName, Customers.LastName, Customers.Email
-FROM Orders
-JOIN Customers
-ON Orders.CustomerID = Customers.CustomerID
-GROUP BY Orders.CustomerID
-ORDER BY Total_Orders DESC
+#11 
+**Create a to-go order by finding the customer, creating the order record, adding items to the order and finding the total cost of the order. Strap in, this is a long 
+one!**
+
+**First, I am trying to see if this customer already exists in our database. Answer: She does exist and her CustomerID = 70.**
+SELECT * 
+FROM 
+    Customers
+WHERE 
+    FirstName = "Loretta";
+
+**Here, I am inserting the given information from the customer's to-go order into the Orders table. OrderID = 1001.**
+INSERT INTO Orders 
+    (OrderID, CustomerID, OrderDate)
+VALUES 
+    ("1001", "70", "2022-05-15 13:00:00");
+
+**Next, I searched for the dish IDs for each dish she ordered. Answers: House salad = 7, Mini Cheeseburgers = 4. Smoothie = 20.**
+SELECT * 
+FROM 
+    Dishes
+WHERE 
+    Name = "House Salad" 
+    OR 
+    Name = "Mini Cheeseburgers" 
+    OR 
+    Name = "Tropical Blue Smoothie";
+
+**Then, I am creating the order in the OrdersDishes table by inserting OrderID, DishIDs, and OrderDishesID (start @ 4022) for each item.**
+INSERT INTO OrdersDishes 
+    (OrdersDishesID, OrderID, DishID) 
+VALUES 
+    ("4022", "1001", "7");
+INSERT INTO OrdersDishes 
+    (OrdersDishesID, OrderID, DishID) 
+VALUES 
+    ("4023", "1001", "4");
+INSERT INTO OrdersDishes 
+    (OrdersDishesID, OrderID, DishID) 
+VALUES 
+    ("4024", "1001", "20");
+
+**Finally, I am pulling the customer's to-go order information from 5/15/2022 by JOINing four different tables and adding all the prices of her items together 
+for a total cost. Answer = $21.00.**
+
+SELECT 
+    Customers.FirstName, 
+    Customers.LastName, 
+    Orders.OrderDate, 
+    OrdersDishes.OrderID, 
+    SUM(Dishes.Price) AS "Total Price"
+FROM Customers 
+JOIN Orders ON 
+    Customers.CustomerID = Orders.CustomerID
+JOIN OrdersDishes ON 
+    OrdersDIshes.OrderID = Orders.OrderID
+JOIN Dishes ON 
+    Dishes.DishID = OrdersDishes.DishID
+WHERE 
+    FirstName = "Loretta" 
+    AND   
+    OrderDate LIKE "2022%";
+
+
+#12 
+**Set customer Cleo Goldwater's favorite dish to Quinoa Salmon Salad.**
+
+**First, I am looking for Cleo's unique CustomerID.**
+SELECT 
+    CustomerID 
+ FROM 
+    Customers 
+ WHERE 
+    FirstName= "Cleo" 
+    AND 
+    LastName = "Goldwater"'
+
+**Next, I am updating the customer's favorite dish to Quinoa Salmon Salad using her unique CustomerID and a subquery within the UPDATE query.**
+UPDATE 
+    Customers 
+SET 
+    FavoriteDish = (SELECT DishID FROM Dishes WHERE Name = "Quinoa Salmon Salad")
+WHERE 
+    CustomerID = "42";
+
+**Lastly, I am checking my work by joining the Dishes and Customer tables to see Cleo Goldwater's new favorite dish.**
+SELECT 
+    Customers.FirstName, 
+    Customers.LastName, 
+    Dishes.Name, 
+    Customers.FavoriteDish
+FROM  
+    Customers
+JOIN Dishes ON 
+    Customers.FavoriteDish = Dishes.DishID
+ORDER BY 
+    Customers.FirstName;
+
+
+#13 
+**Generate a list of the five customers who have placed the most to-go orders. Include number of orders made, full name, e-mail, sort by number of orders (most to 
+least). Answer: Top 5: Blythe, Luciano, Yves, Norby and Oralla.**
+SELECT 
+    COUNT(Orders.OrderID) AS Total_Orders, 
+    Customers.FirstName, 
+    Customers.LastName, 
+    Customers.Email
+FROM 
+    Orders
+JOIN Customers ON 
+    Orders.CustomerID = Customers.CustomerID
+GROUP BY 
+    Orders.CustomerID
+ORDER BY 
+    Total_Orders DESC
 LIMIT 5;
