@@ -4,6 +4,7 @@ questions.**
 
 #1 
 **How many copies of Dracula can the library lend out? Answer: 2**
+
 **First I will look for the COUNT of copies of Dracula the library owns. Answer: 3**
 SELECT 
     COUNT(Title)
@@ -111,12 +112,12 @@ ORDER BY
     Patrons.LastName;
 
 #5 
-**RetuRn the books found in the return bin on July 5th 2020.**
+**Return the books found in the return bin on July 5th 2020.**
 **I am using the update function to add the returned date to the loaned out books.**
 UPDATE 
     Loans 
  SET 
-    ReturnEDDate = "2020-07-05"
+    ReturnedDate = "2020-07-05"
 WHERE 
     BookID = (SELECT BookID from Books WHERE Barcode = "6435968624")
 AND 
@@ -125,7 +126,7 @@ AND
 UPDATE 
     Loans 
 SET 
-    ReturnEDDate = "2020-07-05"
+    ReturnedDate = "2020-07-05"
 WHERE 
     BookID = (SELECT BookID from Books WHERE Barcode = "5677520613")
 AND 
@@ -134,7 +135,7 @@ AND
 UPDATE 
     Loans 
 SET 
-    ReturnEDDate = "2020-07-05"
+    ReturnedDate = "2020-07-05"
 WHERE 
     BookID = (SELECT BookID from Books WHERE Barcode = "8730298424")
 AND 
