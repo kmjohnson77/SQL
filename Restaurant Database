@@ -1,5 +1,5 @@
-**Here is Part 1 of the SQL I used to answer the questions/scenarios posed in the LinkedIn Learning course titled "SQL Code Challenges" by Scott Simpson. The database 
-used for both halves of this course can be found in the Related To Course section under "Exercise Files".**
+**Here is Part 1 of the SQL I used to answer the questions/scenarios posed in the LinkedIn Learning course titled "SQL Code Challenges" by Scott Simpson. 
+The database used for both halves of this course can be found in the Related To Course section under "Exercise Files".**
 
 #1 
 **Obtain a list of customers, including their full name and e-mail address, for restaurant's 5 year anniversary. Order by customer last name.**
@@ -114,8 +114,8 @@ VALUES
 
 
 #9 
-**Look up a customer's reservation on June 14th 2020, party size of 4, Last Name sounds like "Stevenson", without knowing the exact spelling of their last name. 
-Will need to JOIN 2 tables to get desired results.**
+**Look up a customer's reservation on June 14th 2020, party size of 4, Last Name sounds like "Stevenson", without knowing the exact spelling of their 
+last name. Will need to JOIN 2 tables to get desired results.**
 SELECT * 
 FROM 
     Reservations;
@@ -124,8 +124,8 @@ SELECT *
 FROM
     Customers;
 
-**Here I joined the Customers and Reservations table, displayed the full name, party size and reservation date. Used the LIKE operator to get similar matches that 
-start with "Ste". Answer - Customer name: Paco Stephenson**
+**Here I joined the Customers and Reservations table, displayed the full name, party size and reservation date. Used the LIKE operator to get similar 
+matches that start with "Ste". Answer - Customer name: Paco Stephenson**
 
 SELECT 
     Customers.LastName, 
@@ -169,8 +169,8 @@ VALUES
 
 
 #11 
-**Create a to-go order by finding the customer, creating the order record, adding items to the order and finding the total cost of the order. Strap in, this is a long 
-one!**
+**Create a to-go order by finding the customer, creating the order record, adding items to the order and finding the total cost of the order. Strap in, 
+this is a long one!**
 
 **First, I am trying to see if this customer already exists in our database. Answer: She does exist and her CustomerID = 70.**
 SELECT * 
@@ -210,8 +210,8 @@ INSERT INTO OrdersDishes
 VALUES 
     ("4024", "1001", "20");
 
-**Finally, I am pulling the customer's to-go order information from 5/15/2022 by JOINing four different tables and adding all the prices of her items together 
-for a total cost. Answer = $21.00.**
+**Finally, I am pulling the customer's to-go order information from 5/15/2022 by JOINing four different tables and adding all the prices of her items 
+together for a total cost. Answer = $21.00.**
 
 SELECT 
     Customers.FirstName, 
@@ -268,8 +268,8 @@ ORDER BY
 
 
 #13 
-**Generate a list of the five customers who have placed the most to-go orders. Include number of orders made, full name, e-mail, sort by number of orders (most to 
-least). Answer: Top 5: Blythe, Luciano, Yves, Norby and Oralla.**
+**Generate a list of the five customers who have placed the most to-go orders. Include number of orders made, full name, e-mail, sort by number of 
+orders (most to least). Answer: Top 5: Blythe, Luciano, Yves, Norby and Oralla.**
 SELECT 
     COUNT(Orders.OrderID) AS Total_Orders, 
     Customers.FirstName, 
